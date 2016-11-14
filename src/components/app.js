@@ -12,17 +12,7 @@ export default class App extends Component {
 	 *	@param {string} event.url	The newly routed URL
 	 */
 	handleRoute = e => {
-		//console.log(e.url);
-		//console.log(e);
 		this.currentUrl = e.url;
-		console.log("rawr");
-		/*
-		if (localStorage.getItem("authenticated") == null) {
-			this.currentUrl = "/login";
-		} else {
-			console.log(localStorage.getItem("authenticated") == null);
-			this.currentUrl = e.url;
-		}*/
 	};
 
 	render() {

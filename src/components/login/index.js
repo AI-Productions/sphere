@@ -7,11 +7,36 @@ class LoginForm extends Component {
 		
 		this.state.username = '';
 		this.state.password = '';
+		this.state.aid = '';
 	}
   
   tryLogin(e) {
-   alert("Username: " + this.state.username + " Password: " + this.state.password);
-   e.preventDefault();
+  	var self = this;
+		e.preventDefault();
+		fetch('http://localhost:7004/account/login', {
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
+			method: 'POST',
+			body: JSON.stringify({
+				'username': this.state.username,
+				'password': this.state.password
+			})
+		}).then(function(response) {
+			var contentType = response.headers.get("content-type");
+			if(contentType && contentType.indexOf("application/json") !== -1) {
+				return response.json().then(
+					function(json) {
+						console.log(json);
+						self.setState({aid: json.uid});
+						localStorage.setItem('aid', json.uid);
+					}
+				);
+			} else {
+				console.log("Oops, we haven't got JSON!");
+			}
+		});
   }
   
   render() {
